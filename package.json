@@ -12,6 +12,15 @@
   "activationEvents": [
     "workspaceContains:.vscode/translatr.json"
   ],
+  "extensionKind": [
+    "ui"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": ""
+    }
+  },
   "main": "./dist/extension.js",
   "scripts": {
     "vscode:prepublish": "yarn run package",

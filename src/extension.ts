@@ -15,12 +15,24 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const filePath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, '.vscode', 'translatr.config.js');
 		const fileContent = fs.readFileSync(filePath, 'utf8');
-		require(filePath);
-		const script = new vm.Script(fileContent);
-		const sandbox = {};
-		script.runInNewContext(sandbox);
-
-		console.log(sandbox);
+		// const t = require(filePath);
+		// console.log(t);
+		vscode.workspace.openTextDocument(filePath).then((doc) => {
+			vscode.window.showTextDocument(doc);
+			const script = new vm.Script(fileContent);
+			const sandbox: any = {
+					module: {},
+					exports: {},
+					require: require,
+					console: console,
+					__filename: doc.fileName,
+					__dirname: path.dirname(doc.fileName),
+			};
+			const t =script.runInNewContext(sandbox);
+	
+			console.log(t.translations);
+		});
+	
 	} catch (error) {
 		console.log('error', error);
 	}
@@ -50,21 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 				return undefined;
 			}
 	}});
-// 	let disposable3 = vscode.languages.registerHoverProvider({ scheme: 'file', language: '*' }, {
-//     provideHover(document, position) {
 
-//         let hoverRange;
-//         const hoverLineText = document.lineAt(position.line).text;
-//         const pattern = new RegExp("\\w+\\s*\\(.*\\s*\\)");
-// 				console.log('ksdjfhskdjfhskdjfh', hoverLineText)
-//         if (pattern.test(hoverLineText)){
-//             hoverRange = document.getWordRangeAtPosition(position, pattern);
-//             if (hoverRange) return new vscode.Hover(document.getText(hoverRange), new vscode.Range(position, position));
-//             else return null;
-//         }
-//         else return null;
-//     }
-// });
 let helloCommand = vscode.commands.registerTextEditorCommand('translatr.helloWorld', function (document: vscode.TextEditor, range: vscode.TextEditorEdit, ...rest: any[]) {
 	const ast = parse(document.document.getText(), { sourceType: 'module', jsx: true });
 
