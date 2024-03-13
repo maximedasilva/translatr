@@ -1081,9 +1081,9 @@ espree@^9.6.0, espree@^9.6.1:
     eslint-visitor-keys "^3.4.1"
 
 esprima-next@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/esprima-next/-/esprima-next-6.0.2.tgz#4a93368e7b0eed803ee9322920b43cadad6f201e"
-  integrity sha512-2qIj1i/S5nK4piHwMY5NfYpcllx0PzDbILbb5+x6Wj6uj5+vNLgezGQeAqW0QVqaMFmJAcSnvFV/xaRXUKVtjQ==
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/esprima-next/-/esprima-next-6.0.3.tgz#b20e74d019329ab21387d1ae0692ebbda9996d30"
+  integrity sha512-fVfE+9qIOJSbS3AR7roIuL0gCeS+tC86bJV9GlJtwXCRoo67q6tsGGUjThW+JtR5IQSShnHqaDqX8D0IYDfRGA==
 
 esprima@^4.0.1:
   version "4.0.1"
