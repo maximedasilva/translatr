@@ -22,13 +22,14 @@ class Translations {
 		this.#loader = loader;
 		this.#translatrConfigFile = this.#loader(path.join(
 			translatrConfigFilePath || 
-			vscode.workspace.workspaceFolders[0].uri.fsPath, '.vscode', 'translatr.config.js'
+			vscode.workspace.workspaceFolders[0].uri.fsPath,
+			'.vscode', 'translatr.config.js'
 		));
 	}
-	getLangPath () {
+	getLangPath (locale: string) {
 		return path.join(
 			vscode.workspace.workspaceFolders[0].uri.fsPath, 
-			this.getLocales()[0].path
+			this.getLocales().find((lang: LanguageType) => lang.name === locale)?.path
 		);
 	}
 	getProperty(

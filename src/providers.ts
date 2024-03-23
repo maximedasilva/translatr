@@ -31,9 +31,9 @@ const hoverProvider = (
 
 
 
-const provideHelloCommand = (translatr: Translations) => {
+const provideLoadingCommand = (translatr: Translations) => {
   translatr.loadLanguages();
   vscode.window.showInformationMessage('Languages reloaded!');
 }; 
 
-export { hoverProvider, provideHelloCommand };
+export { hoverProvider, provideLoadingCommand };
