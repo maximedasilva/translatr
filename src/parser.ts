@@ -8,16 +8,11 @@ const parseFile = (document: vscode.TextDocument, position: vscode.Position) => 
   if (range) {
     const word = document.getText(range);
     const ast = parse(document.getText(), { sourceType: 'module', jsx: true });
-    traverseAST(ast, (node: TSESTree.Node) => {
-      if (typeof (node as any).value === 'string' ?
-        (node as any).value === word :
-        (node as any).value.value === word) {
-          textKey = typeof (node as any).value === 'string' ?
-            (node as any).value :
-            (node as any).value.value;
-      }
-  });
-  
+    traverseAST(ast, (node: any) => {
+      if (node.value?.value as string === word || node.value === word) {
+        textKey = node.value?.value || node.value as string;
+        } 
+    });
   }
   return textKey;
 };

@@ -2,7 +2,12 @@
   "name": "translatr",
   "displayName": "translatr",
   "description": "take your textkey and find show your translations",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "author": {
+    "name": "Maxime Da Silva",
+    "url": "https://github.com/maximedasilva"
+  },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -48,7 +53,7 @@
     "@types/estraverse": "5.1.7",
     "@types/mocha": "10.0.6",
     "@types/node": "18.x",
-    "@types/vscode": "1.87.0",
+    "@types/vscode": "1.70.0",
     "@typescript-eslint/eslint-plugin": "7.0.2",
     "@typescript-eslint/parser": "7.1.0",
     "@vscode/test-cli": "0.0.6",

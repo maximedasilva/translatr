@@ -559,10 +559,10 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.8.tgz#8268a8c57a3e4abd25c165ecd36237db7948a55e"
   integrity sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==
 
-"@types/vscode@1.87.0":
-  version "1.87.0"
-  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.87.0.tgz#ee9b163f3d2115fb0b20619b34dd3abc5a923361"
-  integrity sha512-y3yYJV2esWr8LNjp3VNbSMWG7Y43jC8pCldG8YwiHGAQbsymkkMMt0aDT1xZIOFM2eFcNiUc+dJMx1+Z0UT8fg==
+"@types/vscode@1.70.0":
+  version "1.70.0"
+  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.70.0.tgz#9cb14cdaac9f450a7005ae2db49ecee4a084c983"
+  integrity sha512-3/9Fz0F2eBgwciazc94Ien+9u1elnjFg9YAhvAb3qDy/WeFWD9VrOPU7CIytryOVUdbxus8uzL4VZYONA0gDtA==
 
 "@typescript-eslint/eslint-plugin@7.0.2":
   version "7.0.2"
