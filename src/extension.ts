@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	let disposable = vscode.commands.registerCommand('translatr.goto', async({locale, textKey}) => {
+	const disposable = vscode.commands.registerCommand('translatr.goto', async({locale, textKey}) => {
     // Your custom function here
 
 		const document = await vscode.workspace.openTextDocument(path.join(translatr.getLangPath(), textKey.split('.')[0]+'.js'));

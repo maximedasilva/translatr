@@ -11,7 +11,7 @@ const options: TransformOptions = {
 };
 const loader = (filePath: string) => {
   try {
-		let fileContent = fs.readFileSync(filePath, 'utf8');
+		const fileContent = fs.readFileSync(filePath, 'utf8');
 		const transpiledCode = transformSync(fileContent, options);
 		// Create a new script using the file content
 		const script = new vm.Script(transpiledCode.code, {

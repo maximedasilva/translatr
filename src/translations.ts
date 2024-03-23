@@ -5,7 +5,8 @@ import fs from 'fs';
 declare interface LanguageType {
 	name: string;
 	path: string;
-};
+}
+
 export declare type TranslationObject = {
 	[_: string]: string | TranslationObject
 };
@@ -79,7 +80,7 @@ class Translations {
 	}
 
 	getTranslation(textKey: string) {
-		let textKeyArray: any = textKey.split('.');
+		const textKeyArray: Array<string> = textKey.split('.');
 		const translations = this.getLocales().map((locale: LanguageType) => {
 			const value = this.getProperty(this.getTranslations(locale.name), textKeyArray);
 			if(value) {
