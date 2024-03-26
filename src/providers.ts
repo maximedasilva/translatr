@@ -1,6 +1,7 @@
 import parseFile from "./parser";
 import * as vscode from 'vscode';
 import Translations, { TranslationObject } from "./translations";
+import path from 'path';
 
 const hoverProvider = (
   translatr: Translations,
@@ -36,4 +37,19 @@ const provideLoadingCommand = (translatr: Translations) => {
   vscode.window.showInformationMessage('Languages reloaded!');
 }; 
 
-export { hoverProvider, provideLoadingCommand };
+const provideGoto =	async(
+  translatr: Translations, 
+  locale: string, 
+  textKey: string
+) => {
+  const document = await vscode.workspace.openTextDocument(
+    path.join(translatr.getLangPath(locale),
+    textKey.split('.')[0]+'.js')
+  );
+  vscode.window.showTextDocument(document);
+
+  vscode.window.showInformationMessage(`Locale: ${locale}, Value: ${textKey}`);
+};
+
+
+export { hoverProvider, provideLoadingCommand, provideGoto };
