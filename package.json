@@ -2,11 +2,12 @@
   "name": "translatr",
   "displayName": "translatr",
   "description": "take your textkey and find show your translations",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": {
     "name": "Maxime Da Silva",
     "url": "https://github.com/maximedasilva"
   },
+  "icon": "./public/Logo.png",
   "license": "MIT",
   "engines": {
     "vscode": "^1.70.0"
