@@ -7,6 +7,10 @@
     "name": "Maxime Da Silva",
     "url": "https://github.com/maximedasilva"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximedasilva/translatr"
+  },
   "icon": "./public/Logo.png",
   "license": "MIT",
   "engines": {
