@@ -65,6 +65,7 @@ class Translations {
 			const filePath = path.join(localePath, file);
 			const fileContent = this.#loader(filePath);
 			const fileName = file.split('.')[0];
+
 			if(!this.#translations[lang.name]) {
 				this.#translations[lang.name] = {};
 			}
