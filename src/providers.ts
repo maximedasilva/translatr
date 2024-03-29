@@ -1,7 +1,9 @@
-import parseFile from "./parser";
+import * as parser from '@babel/parser';
 import * as vscode from 'vscode';
-import Translations, { TranslationObject } from "./translations";
 import path from 'path';
+
+import Translations, { TranslationObject } from "./translations";
+import { parseFile, generateFullPath } from "./parser";
 
 const hoverProvider = (
   translatr: Translations,
@@ -27,23 +29,19 @@ const hoverProvider = (
         md.appendMarkdown(`📁 Translatr\n\n${translations}`, );
         return new vscode.Hover(md);
     }
-} else {
-    return undefined;
-}
+  } else {
+      return undefined;
+  }
 };
-
-
 
 const provideLoadingCommand = (translatr: Translations) => {
   translatr.loadLanguages();
   vscode.window.showInformationMessage('Languages reloaded!');
 }; 
-
 const provideGoto = async(
   translatr: Translations, 
   locale: string, 
   textKey: string,
-  value: string,
 ) => {
   const document = await vscode.workspace.openTextDocument(
     path.join(translatr.getLangPath(locale),
@@ -51,19 +49,24 @@ const provideGoto = async(
   );
 
   const content = document.getText();
-  const lines = content.split('\n');
-  const lineIndex = lines.findIndex(line => line.includes(value));
+  const ast = parser.parse(content, { sourceType: 'module' });
   
-  vscode.window.showTextDocument(
-    document, {
-      preview: true,
-      viewColumn: -2,
-      preserveFocus: false,
-      selection: lineIndex !== -1 ?
-        new vscode.Range(lineIndex, 0, lineIndex, lines[lineIndex].length) :
-        null
-    }
-  );
+  
+  const { start, end } = generateFullPath(ast, textKey);
+  if (start !== undefined && end !== undefined) {
+    const startPosition = document.positionAt(start);
+    const endPosition = document.positionAt(end);
+    const range = new vscode.Range(startPosition, endPosition);
+    vscode.window.showTextDocument(document, {
+      selection: range,
+      viewColumn: -2
+    });
+  } else {
+    vscode.window.showTextDocument(document, {
+      viewColumn: -2
+    });    
+  }
+
 };
 
 

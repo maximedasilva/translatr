@@ -27,8 +27,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const gotoCommand = vscode.commands.registerCommand(
 		'translatr.goto',
-		async function ({locale, textKey, value}) {
-			return await provideGoto(translatr, locale, textKey, value);
+		async function ({ locale, textKey }) {
+			return await provideGoto(translatr, locale, textKey);
 		}
 	);
 
