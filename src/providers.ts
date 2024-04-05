@@ -38,6 +38,7 @@ const provideLoadingCommand = (translatr: Translations) => {
   translatr.loadLanguages();
   vscode.window.showInformationMessage('Languages reloaded!');
 }; 
+
 const provideGoto = async(
   translatr: Translations, 
   locale: string, 

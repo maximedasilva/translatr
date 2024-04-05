@@ -4,11 +4,11 @@ import Translations from './translations';
 import { hoverProvider, provideGoto, provideLoadingCommand } from './providers';
 
 export function activate(context: vscode.ExtensionContext) {
-	const translatr = new Translations(loader);
-	setImmediate(() => {
-		vscode.commands.executeCommand('translatr.reloadTranslations');
+	let translatr: Translations;
+	setImmediate(async() => {
+		translatr = new Translations(loader);
+		translatr.loadLanguages();
 	});
-
 	const languageCommand = vscode.languages.registerHoverProvider(
 		{ scheme: 'file', language: '*' },
 		{
