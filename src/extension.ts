@@ -1,7 +1,12 @@
 import * as vscode from 'vscode';
 import loader from './loader';
 import Translations from './translations';
-import { hoverProvider, provideGoto, provideLoadingCommand } from './providers';
+import {
+	hoverProvider,
+	provideGoto,
+	provideLoadingCommand,
+	providenewTranslation
+} from './providers';
 
 export function activate(context: vscode.ExtensionContext) {
 	let translatr: Translations;
@@ -32,7 +37,14 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	context.subscriptions.push(loadingCommand, languageCommand, gotoCommand);
+	const newTranslationCommand = vscode.commands.registerCommand(
+		'translatr.newTranslation',
+		async function () {
+			return await providenewTranslation(translatr);
+		}
+	);
+
+	context.subscriptions.push(loadingCommand, languageCommand, gotoCommand, newTranslationCommand);
 }
 
 

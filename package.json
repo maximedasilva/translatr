@@ -48,6 +48,10 @@
       {
         "command": "translatr.reloadTranslations",
         "title": "Reload the translations"
+      },
+      {
+        "command": "translatr.newTranslation",
+        "title": "Add a translation (in every files)"
       }
     ]
   },
@@ -69,11 +73,14 @@
   },
   "dependencies": {
     "@babel/core": "7.24.3",
+    "@babel/generator": "^7.24.4",
     "@babel/parser": "7.24.1",
     "@babel/plugin-transform-modules-commonjs": "7.24.1",
     "@babel/preset-typescript": "7.24.1",
     "babel-loader": "9.1.3",
-    "eslint": "8.57.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "prettier": "^3.2.5",
     "ts-loader": "9.5.1"
   }
 }

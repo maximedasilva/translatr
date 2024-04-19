@@ -1,10 +1,11 @@
 import * as parser from '@babel/parser';
 import * as vscode from 'vscode';
 import path from 'path';
-
+import generate from '@babel/generator';
+import fs from 'fs';
 import Translations, { TranslationObject } from "./translations";
-import { parseFile, generateFullPath } from "./parser";
-
+import { parseFile, generateFullPath, findNode } from "./parser";
+import prettier from 'prettier';
 const hoverProvider = (
   translatr: Translations,
   document: vscode.TextDocument,
@@ -53,7 +54,7 @@ const provideGoto = async(
   const ast = parser.parse(content, { sourceType: 'module' });
   
   
-  const { start, end } = generateFullPath(ast, textKey);
+  const { start, end } = findNode(ast, textKey);
   if (start !== undefined && end !== undefined) {
     const startPosition = document.positionAt(start);
     const endPosition = document.positionAt(end);
@@ -67,8 +68,43 @@ const provideGoto = async(
       viewColumn: -2
     });    
   }
-
 };
 
+const providenewTranslation = async(translatr: Translations) => {
+  try {
+    const textKey = await vscode.window.showInputBox({
+      prompt: 'Enter the text key for the new translation',
+      placeHolder: 'common.hello'
+    });
+  
+    const document = await vscode.workspace.openTextDocument(
+      path.join(translatr.getLangPath('en'), //TODO juste a placeholder
+      textKey.split('.')[0]+'.js')
+    );
+    console.log(document);
+    const content = document.getText();
+    const ast = parser.parse(content, { sourceType: 'module' });
+  
+    if(textKey === undefined) {
+      return;
+    }
+  
+    console.log(generateFullPath(ast, textKey));
 
-export { hoverProvider, provideLoadingCommand, provideGoto };
+    const output = generate(ast, { decoratorsBeforeExport: true, jsescOption: {json: true, quotes: 'single', es6: false },  } , generateFullPath(ast, textKey));
+    const formattedCode = await prettier.format(output.code, { parser: 'typescript', singleQuote: true });
+
+    console.log(output);
+    fs.writeFileSync(path.join(translatr.getLangPath('en'),textKey.split('.')[0]+'.js'), formattedCode);
+    vscode.window.showInformationMessage(`new translation added: ${textKey}`);
+  } catch(e) {
+    console.log(e);
+  }
+};
+
+export {
+  hoverProvider,
+  provideLoadingCommand,
+  provideGoto,
+  providenewTranslation
+};
