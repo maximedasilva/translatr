@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
 import loader from './loader';
 import Translations from './translations';
-import { hoverProvider, provideGoto, provideLoadingCommand } from './providers';
+import { MyCompletionItemProvider, hoverProvider, provideGoto, provideLoadingCommand, provideTextKey } from './providers';
 
 export function activate(context: vscode.ExtensionContext) {
-	let translatr: Translations;
+	const translatr: Translations = new Translations(loader);
 	setImmediate(async() => {
-		translatr = new Translations(loader);
 		translatr.loadLanguages();
 	});
 	const languageCommand = vscode.languages.registerHoverProvider(
@@ -32,9 +31,22 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	context.subscriptions.push(loadingCommand, languageCommand, gotoCommand);
+	const generateCommand = vscode.commands.registerCommand(
+		'translatr.generate',
+		async function ({ locale = 'fr' } = {}) {
+			console.log(locale);
+			console.log(await provideTextKey(translatr, locale));
+		}
+	);
+
+	vscode.languages.registerCompletionItemProvider(
+		{ pattern: '**/*.tsx' }, // Provide completion items for .js files
+	new MyCompletionItemProvider(translatr),
+		'.'
+	);
+	context.subscriptions.push(loadingCommand, languageCommand, gotoCommand, generateCommand);
 }
 
 
 
-export function deactivate() {}
+export function deactivate() {} 

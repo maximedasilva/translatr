@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import path from 'path';
 
 import Translations, { TranslationObject } from "./translations";
-import { parseFile, generateFullPath } from "./parser";
+import { parseFile, generateFullPath, generateAllPaths } from "./parser";
 
 const hoverProvider = (
   translatr: Translations,
@@ -70,5 +70,45 @@ const provideGoto = async(
 
 };
 
+const provideTextKey = async(translatr: Translations, locale) => {
+  const document = await vscode.workspace.openTextDocument(
+    path.join(translatr.getLangPath(locale),
+    'appearances.js')
+  );
+  const content = document.getText();
+  const ast = parser.parse(content, { sourceType: 'module' });
+  const finaleArray = [];
+  translatr.setTextKeys(generateAllPaths(ast, [], true, finaleArray));
+  return generateAllPaths(ast, [], true, finaleArray);
+};
 
-export { hoverProvider, provideLoadingCommand, provideGoto };
+class MyCompletionItemProvider implements vscode.CompletionItemProvider {
+  #translatr: Translations;
+
+  constructor(transltr: Translations) {
+    this.#translatr = transltr;
+  }
+  provideCompletionItems(
+    document: vscode.TextDocument,
+    position: vscode.Position,
+  ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
+    const wordRange = document.getWordRangeAtPosition(position, /(["'])(\\?.)*?\1/);
+
+  if (!wordRange) {
+    return [];
+  }
+
+    // Provide all translation keys as completion items   
+
+    const translationKeys = this.#translatr.getTextKeys();
+    const completionItems = translationKeys.map(key => {
+      const item = new vscode.CompletionItem(key);
+      item.insertText = key;
+      return item;
+    });
+
+    // Return a CompletionList
+    return new vscode.CompletionList(completionItems, false);
+  }
+}
+export { hoverProvider, provideLoadingCommand, provideGoto, provideTextKey, MyCompletionItemProvider};

@@ -56,4 +56,36 @@ const generateFullPath = (path: Node, textKey: string) => {
   }
 };
 
-export  {parseFile, generateFullPath};
+
+const generateAllPaths = (path: Node, key= [], isRoot = true, finalArray) => {
+  if (isRoot) {
+    ((path as File).program.body[0] as any).declaration.properties.map(node => {
+      if (node.value.type === 'ObjectExpression') {
+        const a = [node.key.name];
+        generateAllPaths(node.value, a, false, finalArray);
+      } else {
+        
+        key.push(node.key.name);
+        finalArray.push(key);
+      }
+      return node.key.name;
+    });
+  } else {
+    (path as any).properties.map(node => {
+      const _ = [...key];
+      if (node.value.type === 'ObjectExpression') {
+        _.push(node.key.name);
+        generateAllPaths(node.value, _, false, finalArray);
+      } else {
+        _.push(node.key.name);
+        console.log(finalArray);
+        finalArray.push(_);
+      }
+
+      return node.key.name;
+     });
+  }
+  return finalArray;
+};
+
+export  {parseFile, generateFullPath, generateAllPaths};

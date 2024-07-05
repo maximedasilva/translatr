@@ -48,6 +48,10 @@
       {
         "command": "translatr.reloadTranslations",
         "title": "Reload the translations"
+      },
+      {
+        "command": "translatr.generate",
+        "title": "Generate paths"
       }
     ]
   },

@@ -17,7 +17,7 @@ class Translations {
 	#translatrConfigFile: tranltrConfigType = null;
 	#loader = null;
 	#translations = {};
-
+	#textKeys = [];
 	constructor (loader, translatrConfigFilePath = null) {
 		this.#loader = loader;
 		this.#translatrConfigFile = this.#loader(path.join(
@@ -96,6 +96,14 @@ class Translations {
 
 	getLocales() {
 		return this.#translatrConfigFile.languages;
+	}
+
+	setTextKeys(textKeys: Array<Array<string>>) {
+		this.#textKeys = textKeys;
+	}
+
+	getTextKeys () {
+		return this.#textKeys;
 	}
 }
 export default Translations;
