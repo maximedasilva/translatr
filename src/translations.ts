@@ -10,9 +10,11 @@ declare interface LanguageType {
 export declare type TranslationObject = {
 	[_: string]: string | TranslationObject
 };
+
 declare interface tranltrConfigType {
 	languages: Array<LanguageType>;
 }
+
 class Translations {
 	#translatrConfigFile: tranltrConfigType = null;
 	#loader = null;
@@ -26,12 +28,14 @@ class Translations {
 			'.vscode', 'translatr.config.js'
 		));
 	}
+
 	getLangPath (locale: string) {
 		return path.join(
 			vscode.workspace.workspaceFolders[0].uri.fsPath, 
 			this.getLocales().find((lang: LanguageType) => lang.name === locale)?.path
 		);
 	}
+
 	getProperty(
 		obj: TranslationObject,
 		path: Array<string>

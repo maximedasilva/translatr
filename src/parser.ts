@@ -32,7 +32,7 @@ const traverseAST = (node: TSESTree.Node, callback: (node: TSESTree.Node) => voi
 	}
 };
 
-const generateFullPath = (path: Node, textKey: string) => {
+const generateFullPathJS = (path: Node, textKey: string) => {
   const keys = textKey.split('.');
   keys.shift();
   let objectPath: any = path;
@@ -56,4 +56,29 @@ const generateFullPath = (path: Node, textKey: string) => {
   }
 };
 
-export  {parseFile, generateFullPath};
+const generateFullPathTS = (path: Node, textKey: string) => {
+  const keys = textKey.split('.');
+  keys.shift();
+  let objectPath: any = path;
+  ((path as File).program.body[0] as any).declarations[0].init.properties.map(node => {
+    if (node.key.name === keys[0]) {
+      objectPath = node;
+    }
+  });    
+  for (let i = 0; i < keys.length; i++) {
+    if (objectPath && (objectPath.key as any)?.name === keys[i]) {
+      if (i === keys.length - 1) {
+        return { start: objectPath.value.start, end: objectPath.value.end };
+      } else {
+        objectPath = (objectPath.value as any).properties.find(
+          property => property.key?.name === keys[i + 1]
+        );
+      }
+    } else {
+      return null;
+    }
+  }
+  return { start: 0, end: 0 };
+};
+
+export  {parseFile, generateFullPathJS, generateFullPathTS};

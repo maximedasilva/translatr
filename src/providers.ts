@@ -1,9 +1,10 @@
 import * as parser from '@babel/parser';
 import * as vscode from 'vscode';
+import * as fs from 'fs';
 import path from 'path';
 
 import Translations, { TranslationObject } from "./translations";
-import { parseFile, generateFullPath } from "./parser";
+import { parseFile, generateFullPathJS, generateFullPathTS } from "./parser";
 
 const hoverProvider = (
   translatr: Translations,
@@ -44,16 +45,30 @@ const provideGoto = async(
   locale: string, 
   textKey: string,
 ) => {
-  const document = await vscode.workspace.openTextDocument(
-    path.join(translatr.getLangPath(locale),
-    textKey.split('.')[0]+'.js')
+  const isTs = fs.existsSync(
+    path.join(translatr.getLangPath(locale), textKey.split('.')[0] + '.ts')
   );
+  
+  let filePath: string;
+
+  // Check if the file exists
+  if (isTs) {
+    filePath = path.join(
+      translatr.getLangPath(locale),
+      textKey.split('.')[0] + '.ts'
+    );
+  } else {
+    filePath = path.join(
+      translatr.getLangPath(locale),
+      textKey.split('.')[0] + '.js'
+    );
+  }
+
+  const document = await vscode.workspace.openTextDocument(filePath);
 
   const content = document.getText();
   const ast = parser.parse(content, { sourceType: 'module' });
-  
-  
-  const { start, end } = generateFullPath(ast, textKey);
+  const { start, end } = (isTs ? generateFullPathTS :generateFullPathJS)(ast, textKey);
   if (start !== undefined && end !== undefined) {
     const startPosition = document.positionAt(start);
     const endPosition = document.positionAt(end);
@@ -69,6 +84,5 @@ const provideGoto = async(
   }
 
 };
-
 
 export { hoverProvider, provideLoadingCommand, provideGoto };
