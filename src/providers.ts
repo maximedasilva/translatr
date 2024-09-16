@@ -68,7 +68,9 @@ const provideGoto = async(
 
   const content = document.getText();
   const ast = parser.parse(content, { sourceType: 'module' });
-  const { start, end } = (isTs ? generateFullPathTS :generateFullPathJS)(ast, textKey);
+  const { start, end } = (
+    isTs ? generateFullPathTS : generateFullPathJS
+  )(ast, textKey);
   if (start !== undefined && end !== undefined) {
     const startPosition = document.positionAt(start);
     const endPosition = document.positionAt(end);
