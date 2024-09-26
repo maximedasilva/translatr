@@ -20,16 +20,16 @@ const parseFile = (document: vscode.TextDocument, position: vscode.Position) => 
 };
 
 const traverseAST = (node: TSESTree.Node, callback: (node: TSESTree.Node) => void) => {
-	callback(node);
-	for (const key in node) {
-			if (node[key] && typeof node[key] === 'object' && node[key].type) {
-					traverseAST(node[key] as TSESTree.Node, callback);
-			} else if (Array.isArray(node[key])) {
-				(node[key] as TSESTree.Node[]).forEach((child) => {
-					traverseAST(child, callback);
-				});
-			}
-	}
+  callback(node);
+  for (const key in node) {
+      if (node[key] && typeof node[key] === 'object' && node[key].type) {
+          traverseAST(node[key] as TSESTree.Node, callback);
+      } else if (Array.isArray(node[key])) {
+        (node[key] as TSESTree.Node[]).forEach((child) => {
+          traverseAST(child, callback);
+        });
+      }
+  }
 };
 
 const generateFullPathJS = (path: Node, textKey: string) => {
