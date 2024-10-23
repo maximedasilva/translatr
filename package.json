@@ -68,10 +68,10 @@
     "webpack-cli": "5.1.4"
   },
   "dependencies": {
-    "@babel/core": "7.25.2",
-    "@babel/parser": "7.25.6",
-    "@babel/plugin-transform-modules-commonjs": "7.24.8",
-    "@babel/preset-typescript": "7.24.7",
+    "@babel/core": "7.25.9",
+    "@babel/parser": "7.25.9",
+    "@babel/plugin-transform-modules-commonjs": "7.25.9",
+    "@babel/preset-typescript": "7.25.9",
     "babel-loader": "9.2.1",
     "eslint": "9.10.0",
     "ts-loader": "9.5.1"
