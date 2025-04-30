@@ -26,7 +26,6 @@ class Translations {
       vscode.workspace.workspaceFolders[0].uri.fsPath,
       '.vscode', 'translatr.config.js'
     ));
-    console.log('ddqq', this.#translatrConfigFile)
   }
 
   getLangPath (locale: string) {
