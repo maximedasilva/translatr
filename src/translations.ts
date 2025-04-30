@@ -1,7 +1,6 @@
 import path from 'path';
 import * as vscode from 'vscode';
 import fs from 'fs';
-
 declare interface LanguageType {
   name: string;
   path: string;
@@ -27,6 +26,7 @@ class Translations {
       vscode.workspace.workspaceFolders[0].uri.fsPath,
       '.vscode', 'translatr.config.js'
     ));
+    console.log('ddqq', this.#translatrConfigFile)
   }
 
   getLangPath (locale: string) {
@@ -64,18 +64,28 @@ class Translations {
       vscode.workspace.workspaceFolders[0].uri.fsPath,
       lang.path
     );
-
-    fs.readdirSync(localePath).map((file: string) => {
-      const filePath = path.join(localePath, file);
-      const fileContent = this.#loader(filePath);
-      const fileName = file.split('.')[0];
+    const isDirectory = fs.lstatSync(localePath).isDirectory() 
+    if(!isDirectory) {
+      const fileContent = this.#loader(localePath);
 
       if(!this.#translations[lang.name]) {
         this.#translations[lang.name] = {};
       }
 
-      this.#translations[lang.name][fileName] = fileContent;
-    });
+      this.#translations[lang.name] = fileContent;
+    } else {
+      fs.readdirSync(localePath).map((file: string) => {
+        const filePath = path.join(localePath, file);
+        const fileContent = this.#loader(filePath);
+        const fileName = file.split('.')[0];
+  
+        if(!this.#translations[lang.name]) {
+          this.#translations[lang.name] = {};
+        }
+  
+        this.#translations[lang.name][fileName] = fileContent;
+      });
+    }
   }
 
   getTranslations(lang?: string) {
