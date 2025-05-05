@@ -1,6 +1,7 @@
 import path from 'path';
 import * as vscode from 'vscode';
 import fs from 'fs';
+import loader from './loader';
 declare interface LanguageType {
   name: string;
   path: string;
@@ -19,8 +20,16 @@ class Translations {
   #loader = null;
   #translations = {};
 
-  constructor (loader, translatrConfigFilePath = null) {
-    this.#loader = loader;
+  constructor (translatrConfigFilePath = null) {
+    this.#loader = loader.load;
+    this.#translatrConfigFile = this.#loader(path.join(
+      translatrConfigFilePath ||
+      vscode.workspace.workspaceFolders[0].uri.fsPath,
+      '.vscode', 'translatr.config.js'
+    ));
+  }
+
+  updateTranslatrConfigFile(translatrConfigFilePath?: string) {
     this.#translatrConfigFile = this.#loader(path.join(
       translatrConfigFilePath ||
       vscode.workspace.workspaceFolders[0].uri.fsPath,

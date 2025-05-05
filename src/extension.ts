@@ -6,7 +6,7 @@ import { hoverProvider, provideGoto, provideLoadingCommand } from './providers';
 export function activate(context: vscode.ExtensionContext) {
   let translatr: Translations;
   setImmediate(async() => {
-    translatr = new Translations(loader);
+    translatr = new Translations();
     translatr.loadLanguages();
   });
   const languageCommand = vscode.languages.registerHoverProvider(
@@ -25,6 +25,14 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const reactivateCommand = vscode.commands.registerCommand(
+ 'translatr.reloadTranslatrconfig',
+    function () {
+      translatr.updateTranslatrConfigFile();
+      return provideLoadingCommand(translatr);
+    }
+  );
+
   const gotoCommand = vscode.commands.registerCommand(
     'translatr.goto',
     async function ({ locale, textKey }) {
@@ -32,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(loadingCommand, languageCommand, gotoCommand);
+  context.subscriptions.push(loadingCommand, languageCommand, gotoCommand, reactivateCommand);
 }
 
 

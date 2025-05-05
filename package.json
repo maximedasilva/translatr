@@ -2,7 +2,7 @@
   "name": "translatr",
   "displayName": "translatr",
   "description": "take your textkey and find show your translations",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": {
     "name": "Maxime Da Silva",
     "url": "https://github.com/maximedasilva"
@@ -48,6 +48,10 @@
       {
         "command": "translatr.reloadTranslations",
         "title": "Reload the translations"
+      },
+      {
+        "command": "translatr.reloadTranslatrconfig",
+        "title": "Reload the translatr config"
       }
     ]
   },
