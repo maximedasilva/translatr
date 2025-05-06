@@ -45,23 +45,29 @@ const provideGoto = async(
   locale: string, 
   textKey: string,
 ) => {
-  const isTs = fs.existsSync(
-    path.join(translatr.getLangPath(locale), textKey.split('.')[0] + '.ts')
-  );
-  
-  let filePath: string;
-
-  // Check if the file exists
-  if (isTs) {
-    filePath = path.join(
-      translatr.getLangPath(locale),
-      textKey.split('.')[0] + '.ts'
-    );
+   const isDirectory = fs.lstatSync(translatr.getLangPath(locale)).isDirectory();
+   let filePath: string;
+ 
+  let isTs;
+  if(!isDirectory) {
+    isTs = translatr.getLangPath(locale).endsWith('.ts');
+    filePath = translatr.getLangPath(locale);
   } else {
-    filePath = path.join(
-      translatr.getLangPath(locale),
-      textKey.split('.')[0] + '.js'
+    isTs = fs.existsSync(
+      path.join(translatr.getLangPath(locale), textKey.split('.')[0] + '.ts')
     );
+    // Check if the file exists
+    if (isTs) {
+      filePath = path.join(
+        translatr.getLangPath(locale),
+        textKey.split('.')[0] + '.ts'
+      );
+    } else {
+      filePath = path.join(
+        translatr.getLangPath(locale),
+        textKey.split('.')[0] + '.js'
+      );
+    }
   }
 
   const document = await vscode.workspace.openTextDocument(filePath);
