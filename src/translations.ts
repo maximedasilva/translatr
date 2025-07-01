@@ -5,6 +5,7 @@ import loader from './loader';
 declare interface LanguageType {
   name: string;
   path: string;
+  requires?: Array<{ importName: string, importInfos: Object }>;
 }
 
 export declare type TranslationObject = {
@@ -72,9 +73,9 @@ class Translations {
       vscode.workspace.workspaceFolders[0].uri.fsPath,
       lang.path
     );
-    const isDirectory = fs.lstatSync(localePath).isDirectory() 
-    if(!isDirectory) {
-      const fileContent = this.#loader(localePath);
+    const isDirectory = fs.lstatSync(localePath).isDirectory();
+    if (!isDirectory) {
+      const fileContent = this.#loader(localePath, lang.requires);
 
       if(!this.#translations[lang.name]) {
         this.#translations[lang.name] = {};
@@ -84,7 +85,7 @@ class Translations {
     } else {
       fs.readdirSync(localePath).map((file: string) => {
         const filePath = path.join(localePath, file);
-        const fileContent = this.#loader(filePath);
+        const fileContent = this.#loader(filePath, lang.requires);
         const fileName = file.split('.')[0];
   
         if(!this.#translations[lang.name]) {

@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import loader from './loader';
 import Translations from './translations';
 import { hoverProvider, provideGoto, provideLoadingCommand } from './providers';
 

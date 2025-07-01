@@ -10,7 +10,8 @@ const options: TransformOptions = {
   plugins: [parser],
 };
 const loader = {
-  load: (filePath: string) => {
+  load: (filePath: string, config?: Array<{ importName: string, importInfos: Object }>) => {
+  
     try {
       const fileContent = fs.readFileSync(filePath, 'utf8');
       const transpiledCode = transformSync(fileContent, options);
@@ -18,11 +19,23 @@ const loader = {
         filename: filePath,
       });
 
+      // Custom require to mock @neoframe/models/constants
+      function fakeRequire(moduleName: string) {
+        if (config) {
+          const found = config.find((item) => item.importName === moduleName);
+          if (found) {
+            return found.importInfos;
+          } else {
+            return require(moduleName);
+          }
+        }
+        return require(moduleName);
+      }
       const sandbox: vm.Context = {
         module: {},
         exports: exports,
         console: console,
-        require: require,
+        require: fakeRequire,
         __filename: filePath,
         __dirname: filePath,
       };
