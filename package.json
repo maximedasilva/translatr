@@ -63,21 +63,21 @@
     "@types/mocha": "10.0.10",
     "@types/node": "22.x",
     "@types/vscode": "1.70.0",
-    "@typescript-eslint/eslint-plugin": "8.26.1",
-    "@typescript-eslint/parser": "8.26.1",
-    "@vscode/test-cli": "0.0.10",
-    "@vscode/test-electron": "2.4.1",
-    "typescript": "5.8.2",
-    "webpack": "5.98.0",
+    "@typescript-eslint/eslint-plugin": "8.35.0",
+    "@typescript-eslint/parser": "8.35.0",
+    "@vscode/test-cli": "0.0.11",
+    "@vscode/test-electron": "2.5.2",
+    "typescript": "5.8.3",
+    "webpack": "5.99.9",
     "webpack-cli": "6.0.1"
   },
   "dependencies": {
-    "@babel/core": "7.26.10",
-    "@babel/parser": "7.26.10",
-    "@babel/plugin-transform-modules-commonjs": "7.26.3",
-    "@babel/preset-typescript": "7.26.0",
+    "@babel/core": "7.27.4",
+    "@babel/parser": "7.27.5",
+    "@babel/plugin-transform-modules-commonjs": "7.27.1",
+    "@babel/preset-typescript": "7.27.1",
     "babel-loader": "10.0.0",
-    "eslint": "9.22.0",
+    "eslint": "9.29.0",
     "ts-loader": "9.5.2"
   }
 }
