@@ -666,10 +666,10 @@
   dependencies:
     undici-types "~6.21.0"
 
-"@types/vscode@1.70.0":
-  version "1.70.0"
-  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.70.0.tgz#9cb14cdaac9f450a7005ae2db49ecee4a084c983"
-  integrity sha512-3/9Fz0F2eBgwciazc94Ien+9u1elnjFg9YAhvAb3qDy/WeFWD9VrOPU7CIytryOVUdbxus8uzL4VZYONA0gDtA==
+"@types/vscode@1.104.0":
+  version "1.104.0"
+  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.104.0.tgz#6e4d041d1ff5722db72c688518b330fcfb6fc658"
+  integrity sha512-0KwoU2rZ2ecsTGFxo4K1+f+AErRsYW0fsp6A0zufzGuhyczc2IoKqYqcwXidKXmy2u8YB2GsYsOtiI9Izx3Tig==
 
 "@typescript-eslint/eslint-plugin@8.43.0":
   version "8.43.0"
